@@ -41,7 +41,11 @@
             // color each feature randomly
             data = L.geoJson(data, {
                 style: function (feature) {
-                    return { color: "#" + Math.floor(Math.random() * 16777215).toString(16) };
+                    // sample rgb uniformally from [0, 180]
+                    var r = Math.floor(Math.random() * 180);
+                    var g = Math.floor(Math.random() * 180);
+                    var b = Math.floor(Math.random() * 180);
+                    return { color: "rgb(" + r + "," + g + "," + b + ")" };
                 }
             })
             data.addTo(map);
