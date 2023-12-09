@@ -36,7 +36,13 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
         // load from /temp.geojson
-        $.getJSON("/temp.geojson", function (data) {
+        var path = "/temp.geojson"
+        // parse ? string and get the path if it exists
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("path")) {
+            path = urlParams.get("path");
+        }
+        $.getJSON(path, function (data) {
             // render the geojson as a layer on the map
             // color each feature randomly
             data = L.geoJson(data, {
