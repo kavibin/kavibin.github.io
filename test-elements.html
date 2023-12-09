@@ -1,11 +1,14 @@
-
 <!-- render /temp.geojson using leaflet -->
 <html>
+
 <head>
     <title>Leaflet</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <style>
         #map {
             width: 100%;
@@ -14,37 +17,40 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
+
 <body>
 
-<div>
-<!-- loading text, overlaid -->
-<div id="loading" style="position: absolute; top: 50%; left: 50%; margin-top: -50px; margin-left: -50px; z-index: 1000; background-color: white; padding: 10px; border-radius: 10px;">
-    <h1>Loading...</h1>
-    <p>This may take a while.</p>
+    <div>
+        <!-- loading text, overlaid -->
+        <div id="loading"
+            style="position: absolute; top: 50%; left: 50%; margin-top: -50px; margin-left: -50px; z-index: 1000; background-color: white; padding: 10px; border-radius: 10px;">
+            <h1>Loading...</h1>
+            <p>This may take a while.</p>
+        </div>
     </div>
-</div>
 
-<div id="map"></div>
-<script>
-    var map = L.map('map').setView([51.505, -0.09], 13);
-    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-    // load from /temp.geojson
-    $.getJSON("/temp.geojson", function(data) {
-        // render the geojson as a layer on the map
-        // color each feature randomly
-        data = L.geoJson(data, {
-            style: function(feature) {
-                return {color: "#" + Math.floor(Math.random()*16777215).toString(16)};
-            }
-        })
-        data.addTo(map);
-        // fit the map to the geojson
-        map.fitBounds(data.getBounds());
-        // remove the loading text
-        $("#loading").remove();
-    });
-</script>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        // load from /temp.geojson
+        $.getJSON("/temp.geojson", function (data) {
+            // render the geojson as a layer on the map
+            // color each feature randomly
+            data = L.geoJson(data, {
+                style: function (feature) {
+                    return { color: "#" + Math.floor(Math.random() * 16777215).toString(16) };
+                }
+            })
+            data.addTo(map);
+            // fit the map to the geojson
+            map.fitBounds(data.getBounds());
+            // remove the loading text
+            $("#loading").remove();
+        });
+    </script>
 </body>
+
 </html>
